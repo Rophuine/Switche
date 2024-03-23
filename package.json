@@ -1,0 +1,37 @@
+{
+  "name": "switche",
+  "version": "1.0.3",
+  "description": "TypeScript-safe switch expression syntax",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rophuine/Switche.git"
+  },
+  "keywords": [
+    "switch",
+    "typescript",
+    "functional"
+  ],
+  "author": "Lionell Pack",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rophuine/Switche/issues"
+  },
+  "homepage": "https://github.com/Rophuine/Switche#readme",
+  "main": "dist/cjs/switche.js",
+  "module": "dist/mjs/switche.js",
+  "types": "dist/mjs/switche.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/switche.js",
+      "require": "./dist/cjs/switche.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "shx rm -rf dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && shx cp cjs.json dist/cjs/package.json && shx cp mjs.json dist/mjs/package.json"
+  },
+  "devDependencies": {
+    "shx": "^0.3.4",
+    "typescript": "^5.4.3"
+  }
+}
