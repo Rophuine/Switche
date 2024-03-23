@@ -1,6 +1,6 @@
 {
   "name": "switche",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "TypeScript-safe switch expression syntax",
   "repository": {
     "type": "git",
