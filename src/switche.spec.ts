@@ -25,6 +25,23 @@ const d = switche<number|string, string|boolean>(i)
     .case('seven', true)
     .default('Many');//?
 
+
+const e = switche(i)
+    .case(1, 'One')
+    .case(n => n > 3 && n <= 7, 'medium')
+    .default('Other');//?
+
+const f = switche(i)
+    .case(n => n > 3 && n <= 7, 'medium')
+    .case(1, 'One')
+    .default('Other');//?
+
+const result = switche(i)
+    .case(v => v > 6, 'High')
+    .case(1, 'One')
+    .case(2, 'Two')
+    .default('Neither');//?
+    
 /* ------ Should have type errors ------ */
 const z = switche(i)
     .case(1, 'One')

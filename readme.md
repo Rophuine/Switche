@@ -16,6 +16,30 @@ That's a lot of code, though, and you need to add a return type annotation if yo
 
 Switche gives you a nicer syntax to achieve the same result, with a little more type safety.
 
+## Value Syntax
+
+Provide the value to test in a call to `switche`, then provide multiple `.case` calls, and finally a `.default` call. The result of the call chain will be the second parameter of the **first** matching case, or else the parameter passed to `.default`
+
+```typescript
+const result = switche(value)
+    .case(1, 'One')
+    .case(2, 'Two')
+    .default('Neither');
+```
+
+## Predicate syntax
+
+As well as providing values to match against, you can provide predicate functions:
+```typescript
+const result = switche(value)
+    .case(v => v < 0, 'Negative')
+    .case(1, 'One')
+    .case(2, 'Two')
+    .default('Neither');
+```
+
+## Type Safety
+
 ```typescript
 const result = switche(value)
     .case(1, 'One')
@@ -56,3 +80,4 @@ const result = switche<number,string>(value)
     .case(2, 2) // Type error: Argument of type 'number' is not assignable to parameter of type 'string'.
     .default('Neither');
 ```
+
