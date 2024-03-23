@@ -36,11 +36,54 @@ const f = switche(i)
     .case(1, 'One')
     .default('Other');//?
 
-const result = switche(i)
+const g = switche(i)
     .case(v => v > 6, 'High')
     .case(1, 'One')
     .case(2, 'Two')
     .default('Neither');//?
+
+try {
+    const result = switche(i)
+    .case(2, 'Two')
+    .orThrow();//?
+} catch (ex) {
+    ex;//?
+}
+
+try {
+    const result = switche(i)
+    .case(2, 'Two')
+    .orThrow('Custom error text');
+} catch (ex) {
+    ex;//?
+}
+
+class CustomError extends Error {    
+    constructor(details) {
+        super(`Custom error being thrown with message '${details}'`);
+    }
+}
+try {
+    const result = switche(i)
+    .case(2, 'Two')
+    .orThrow('Custom error text', CustomError);
+} catch (ex) {
+    ex;//?
+}
+
+class ComplexCustomError extends Error {
+    constructor(errorCode: number) {
+        super(`Error thrown with code ${errorCode}`);
+    }
+}
+try {
+    const result = switche(i)
+    .case(2, 'Two')
+    .orThrow(() => new ComplexCustomError(5));
+} catch (ex) {
+    ex;//?
+}
+
     
 /* ------ Should have type errors ------ */
 const z = switche(i)

@@ -1,12 +1,14 @@
 type CaseResult<TValue, TResult> = {
     case: (v: TValue|((u: TValue) => boolean), r: TResult) => CaseResult<TValue, TResult>,
-    default: (r: TResult) => TResult
+    default: (r: TResult) => TResult,
+    orThrow: <TError>(error?: string | (() => TError), errorType?: new (message: string) => TError) => TResult,
 }
 
 function switcheResolved<TValue, TResult>(result: TResult): CaseResult<TValue, TResult> {
     return {
         case: (v, r) => switcheResolved<TValue, TResult>(result),
-        default: (r) => result
+        default: (r) => result,
+        orThrow: () => result,
     };
 }
 
@@ -21,7 +23,12 @@ function switcheUnresolved<TValue, TResult>(value: TValue): CaseResult<TValue, T
             const match = isCaseFunctionParameter(v) ? v(value) : v === value;
             return match ? switcheResolved<TValue, TResult>(r) : switcheUnresolved<TValue, TResult>(value)
         },
-        default: (r) => r
+        default: (r) => r,
+        orThrow: (error, errorType) => {
+            if (typeof error === 'function') throw error();
+            const errorFactory = errorType ?? Error;
+            throw new errorFactory(error ?? 'No matching case');
+        }
     }
 }
 

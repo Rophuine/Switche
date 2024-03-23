@@ -38,6 +38,44 @@ const result = switche(value)
     .default('Neither');
 ```
 
+## Throw if not matched
+
+Instead of providing a default, you can tell Switche to throw an error if there is no match. `.orThrow` takes two optional parameters: an error message and an error type. If you provide an error type, it must inherit from `Error` and accept a string in the constructor.
+
+```typescript
+const result = switche(value)
+    .case(1, 'One')
+    .orThrow('The provided value was not 1');
+```
+
+```typescript
+class CustomError extends Error {    
+    constructor(details) {
+        super(`Custom error being thrown with message '${details}'`);
+    }
+}
+const result = switche(value)
+    .case(1, 'One')
+    .orThrow('The provided value was not 1', CustomError);
+```
+
+If your custom error constructor doesn't take a single string parameter or you otherwise want to control the creation of the error, you can pass a function as the first parameter which will be called to create the error to throw. In this case, the second parameter is ignored.
+
+```typescript
+class ComplexCustomError extends Error {
+    constructor(errorCode: number) {
+        super(`Error thrown with code ${errorCode}`);
+    }
+}
+try {
+    const result = switche(i)
+    .case(2, 'Two')
+    .orThrow(() => new ComplexCustomError(5));
+} catch (ex) {
+    ex;//?
+}
+```
+
 ## Type Safety
 
 ```typescript
